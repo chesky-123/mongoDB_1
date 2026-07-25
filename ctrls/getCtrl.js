@@ -31,7 +31,6 @@ export async function getBestPlayers(req, res, next) {
 export async function getPlayerStats(req, res, next) {
     try {
         const { name } = req.params;
-        console.log(name);
 
         const result = await getPlayerStatsFromDb(name);
         return res.status(200).json(result);

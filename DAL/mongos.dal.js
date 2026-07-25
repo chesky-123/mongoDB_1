@@ -18,7 +18,6 @@ export async function leaderboardGame(game) {
 export async function leaderboardGlobal() {
 
     const result = await collection.find().sort({ points: -1 }).limit(10).toArray();
-    console.log(result);
 
     return result;
 };
