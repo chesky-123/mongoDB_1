@@ -87,7 +87,14 @@ export async function getStatsFromDb() {
         }
     ]).toArray()
     return stats[0]
-}
+};
+
+export async function getGamesFromDb() {
+    const games = await collection.distinct("game");
+    console.log(games);
+    
+    return games
+};
 
 
 

@@ -1,4 +1,4 @@
-import { getPlayerStatsFromDb, getStatsFromDb, leaderboardGame, leaderboardGlobal } from "../DAL/mongos.dal.js";
+import { getGamesFromDb, getPlayerStatsFromDb, getStatsFromDb, leaderboardGame, leaderboardGlobal } from "../DAL/mongos.dal.js";
 
 
 
@@ -47,8 +47,19 @@ export async function getStats(req, res, next) {
         const stats = await getStatsFromDb();
         res.status(200).json(stats)
     } catch (e) {
-     console.error(e.message);
-        res.status(500).json({ Error: "server error" })   
+        console.error(e.message);
+        res.status(500).json({ Error: "server error" })
+    }
+};
+
+
+export async function getGames(req, res) {
+    try {
+        const games = await getGamesFromDb();
+        return res.status(200).json(games);
+    } catch (e) {
+        console.error(e.message);
+        res.status(500).json({ Error: "server error" })
     }
 }
 

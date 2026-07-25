@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { getStats } from "../ctrls/getCtrl.js";
+import { getGames, getStats } from "../ctrls/getCtrl.js";
 
 
 const router = Router();
 
-router.get("/stats",getStats)
+router.get("/stats", getStats);
+
+router.get("/games", getGames);
 
 export default router;
