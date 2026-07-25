@@ -1,3 +1,4 @@
+import { count } from "node:console";
 import { collection } from "../DB/mongoDb.js";
 
 
@@ -23,7 +24,7 @@ export async function leaderboardGlobal() {
 };
 
 export async function getPlayerStatsFromDb(name) {
-    
+
     const playerProfile = await collection.aggregate([
         { $match: { playerName: name } },
         {
@@ -49,6 +50,43 @@ export async function getPlayerStatsFromDb(name) {
 
     ]).toArray()
     return playerProfile[0];
+};
+
+export async function getStatsFromDb() {
+    const stats = await collection.aggregate([
+        {
+            $facet: {
+                topScore: [{ $sort: { points: -1 } },
+                { $limit: 1 }],
+                allScores: [{ $count: "count" }],
+                popularGame: [{
+                    $group: {
+                        _id: "$game",
+                        count: { $sum: 1 }
+                    }
+                }, {
+                    $sort: { count: -1 }
+                }, {
+                    $limit: 1
+                }, {
+                    $project: {
+                        _id: 0,
+                        game: "$_id",
+                        count: 1
+                    }
+                }
+                ],
+                averageScore: [{
+                    $group: {
+                        _id: null,
+                        avgPoints: { $avg: "$points" }
+                    }
+                },
+                { $project: { _id: 0 } }]
+            }
+        }
+    ]).toArray()
+    return stats[0]
 }
 
 

@@ -3,6 +3,7 @@ import scoresRouter from "./rouets/scores.js";
 import dotenv from "dotenv/config"
 // import { connectCreateScore } from "./ctrls/postCtrl.js";
 import leaderboardRouter from "./rouets/leaderboard.js"
+import statsRouter from "./rouets/stats.js"
 
 const PORT = process.env.PORT;
 
@@ -14,6 +15,8 @@ app.use(express.json());
 app.use("/", scoresRouter);
 
 app.use("/",leaderboardRouter);
+
+app.use("/",statsRouter)
 
 // app.post("/", connectCreateScore);
 
