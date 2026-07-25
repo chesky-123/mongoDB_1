@@ -13,6 +13,6 @@ export async function isValidData(req,res,next) {
         next()
     }catch(e){
         console.error(e.message);
-        res.statua(500).json({Error:"server failed"})
+        res.status(500).json({Error:"server failed"})
     }
 }

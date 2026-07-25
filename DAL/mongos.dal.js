@@ -9,8 +9,15 @@ export async function createScore(data) {
 };
 
 export async function leaderboardGame(game) {
+    console.log(game);
 
-    const result = await collection.find({ game: game.game }).sort({ points: -1 }).limit(10).toArray();
+    const result = await collection.aggregate([
+        { $match: { game: game } },
+        { $sort: { points: -1 } },
+        { $limit: 10 },
+        {$project:{_id:0}}
+    ]).toArray();
+    console.log(result);
 
     return result;
 };
@@ -91,7 +98,7 @@ export async function getStatsFromDb() {
 export async function getGamesFromDb() {
     const games = await collection.distinct("game");
     console.log(games);
-    
+
     return games
 };
 

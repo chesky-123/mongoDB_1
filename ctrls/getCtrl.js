@@ -4,13 +4,16 @@ import { getGamesFromDb, getPlayerStatsFromDb, getStatsFromDb, leaderboardGame, 
 
 export async function getTenBestPlayersByGame(req, res, next) {
     try {
-        const game = req.params;
+        const { game } = req.params;
+        const sorces = await leaderboardGame(game);
 
-        const respons = await leaderboardGame(game);
-
+        const respons = sorces.map((item, index) => ({
+            rank: index + 1,
+            ...item
+        }))
         return res.status(200).json(respons);
     } catch (e) {
-        console.error(e.message);
+        console.error(e);
         return res.status(500).json({ Error: "server faild" })
     }
 };
